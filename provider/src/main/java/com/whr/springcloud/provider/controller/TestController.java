@@ -1,5 +1,6 @@
 package com.whr.springcloud.provider.controller;
 
+import com.google.common.collect.Maps;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -49,6 +50,13 @@ public class TestController {
         System.out.println("hystrix");
         HashMap hashMap = new HashMap<String, Object>(16);
         hashMap.put("msg", "123");
+        return hashMap;
+    }
+
+    @RequestMapping(value = "/provider/test")
+    public Map test() {
+        HashMap<Object, Object> hashMap = Maps.newHashMap();
+        hashMap.put("test", "provider1");
         return hashMap;
     }
 

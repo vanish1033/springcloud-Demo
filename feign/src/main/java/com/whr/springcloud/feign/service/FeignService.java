@@ -1,9 +1,11 @@
 package com.whr.springcloud.feign.service;
 
+import com.google.common.collect.Maps;
 import com.whr.springcloud.feign.fallback.MyFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,5 +26,8 @@ public interface FeignService {
      */
     @RequestMapping(value = "/provider/hystrix")
     Map hystrix() throws InterruptedException;
+
+    @RequestMapping(value = "/provider/test")
+    public Map test();
 
 }

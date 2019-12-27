@@ -25,4 +25,11 @@ public class MyFallback implements FeignService {
         return map;
     }
 
+    @Override
+    public Map test() {
+        HashMap<Object, Object> hashMap = Maps.newHashMap();
+        hashMap.put("msg", "服务熔断了");
+        return hashMap;
+    }
+
 }

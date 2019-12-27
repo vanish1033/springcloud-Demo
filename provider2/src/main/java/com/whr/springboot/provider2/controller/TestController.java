@@ -1,5 +1,6 @@
 package com.whr.springboot.provider2.controller;
 
+import com.google.common.collect.Maps;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -47,6 +48,13 @@ public class TestController {
     public Map hystrix() {
         System.out.println("hystrix");
         throw new RuntimeException();
+    }
+
+    @RequestMapping(value = "/provider/test")
+    public Map test() {
+        HashMap<Object, Object> hashMap = Maps.newHashMap();
+        hashMap.put("test", "provider2");
+        return hashMap;
     }
 
 }
