@@ -18,6 +18,10 @@ public interface FeignService {
     @PostMapping(value = "/provider1/post")
     Object test2(@RequestParam String name);
 
+    /**
+     * @return
+     * @throws InterruptedException
+     */
     @RequestMapping(value = "/provider/hystrix")
     Map hystrix() throws InterruptedException;
 

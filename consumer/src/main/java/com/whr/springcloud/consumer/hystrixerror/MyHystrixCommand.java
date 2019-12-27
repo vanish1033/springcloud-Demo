@@ -1,7 +1,6 @@
 package com.whr.springcloud.consumer.hystrixerror;
 
 import com.netflix.hystrix.HystrixCommand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -39,7 +38,7 @@ public class MyHystrixCommand extends HystrixCommand<String> {
      */
     @Override
     public String getFallback() {
-        Throwable throwable = super.getExecutionException();
+        Throwable throwable = getExecutionException();
         System.out.println(throwable.getMessage());
         return "error1";
     }

@@ -1,5 +1,6 @@
 package com.whr.springcloud.feign.fallback;
 
+import com.google.common.collect.Maps;
 import com.whr.springcloud.feign.service.FeignService;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class MyFallback implements FeignService {
 
     @Override
     public Map hystrix() {
-        HashMap<Object, Object> map = new HashMap<>(16);
+        HashMap<Object, Object> map = Maps.newHashMap();
         map.put("msg", "服务熔断了");
         return map;
     }
