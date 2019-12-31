@@ -1,6 +1,7 @@
 package com.whr.springboot.provider2.controller;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Maps;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

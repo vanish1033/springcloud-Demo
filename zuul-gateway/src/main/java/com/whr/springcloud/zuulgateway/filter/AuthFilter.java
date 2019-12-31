@@ -3,6 +3,11 @@ package com.whr.springcloud.zuulgateway.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.utils.HttpClientUtils;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author:whr 2019/11/17
  */
+@Slf4j
 @Component
 public class AuthFilter extends ZuulFilter {
     /**
@@ -21,7 +27,7 @@ public class AuthFilter extends ZuulFilter {
      */
     @Override
     public String filterType() {
-        return "pre";
+        return FilterConstants.PRE_TYPE;
     }
 
     /**
@@ -56,16 +62,22 @@ public class AuthFilter extends ZuulFilter {
      */
     @Override
     public Object run() throws ZuulException {
-//        int i = 1 / 0;
-        RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
-        String token = request.getParameter("token");
-//        if (token == null) {
-//            ctx.setSendZuulResponse(false);
-//            ctx.setResponseStatusCode(401);
-//            ctx.addZuulResponseHeader("content-type", "text/html;charset=utf-8");
-//            ctx.setResponseBody("非法访问");
-//        }
+        RequestContext currentContext = RequestContext.getCurrentContext();
+        HttpServletRequest request = currentContext.getRequest();
+        log.info(request.getRequestURI());
+        String token = request.getHeader("token");
+
+        /**
+         * 没有取到 token, 判定为非法访问, 不进行路由
+         */
+        if (StringUtils.isBlank(token)) {
+            /**
+             * 表示不进行路由转发
+             */
+            currentContext.setSendZuulResponse(Boolean.FALSE);
+            currentContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        }
+
         return null;
     }
 }
